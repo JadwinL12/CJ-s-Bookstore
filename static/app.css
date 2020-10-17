@@ -1,0 +1,49 @@
+
+
+.content{
+	color:white;
+	text-align: center;
+}
+
+.red {
+	background: red;
+	height: 100px;
+}
+
+.blue{
+ background: blue;
+ height: 100px;
+} 
+
+/*.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, */
+.thumbnail>img {
+	height:200px;
+}
+.col-sm-6.col-md-4.col-lg-3 {
+	height:400px; 
+}
+.thumbnail {
+	height:380px;
+}
+
+.button {
+	position: absolute;
+    bottom: 30px;
+}
+
+body { padding-top: 70px; }
+.jumbotron {
+  color: #2c3e50;
+  background: #ecf0f1;
+
+}
+.navbar-inverse {
+  background: #2c3e50;
+  color: white;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse a{
+  color:white;
+}
+.navbar-inverse .navbar-nav>li>a {
+  color: white;
+} 	    
