@@ -7,7 +7,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template("home.html")
+    db_connection = connect_to_database()
+    query = "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books;"
+    result = execute_query(db_connection, query).fetchall()
+    # print(result)
+    return render_template("home.html", books=result)
 
 
 @app.route('/signup')
@@ -26,4 +30,4 @@ def cart():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

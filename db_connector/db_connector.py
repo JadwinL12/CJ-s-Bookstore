@@ -3,15 +3,15 @@ from db_credentials import host, user, passwd, db
 
 
 def connect_to_database(host=host, user=user, passwd=passwd, db=db):
-    '''
+    """
     connects to a database and returns a database objects
-    '''
+    """
     db_connection = mariadb.connect(host,user,passwd,db)
     return db_connection
 
 
 def execute_query(db_connection=None, query=None, query_params=()):
-    '''
+    """
     executes a given SQL query on the given db connection and returns a Cursor object
 
     db_connection: a MySQLdb connection object created by connect_to_database()
@@ -20,7 +20,7 @@ def execute_query(db_connection=None, query=None, query_params=()):
     returns: A Cursor object as specified at https://www.python.org/dev/peps/pep-0249/#cursor-objects.
     You need to run .fetchall() or .fetchone() on that object to actually access the results.
 
-    '''
+    """
 
     if db_connection is None:
         print("No connection to the database found! Have you called connect_to_database() first?")
@@ -41,7 +41,7 @@ def execute_query(db_connection=None, query=None, query_params=()):
     for q in query_params:
         params = params + (q)
     '''
-    #TODO: Sanitize the query before executing it!!!
+    # TODO: Sanitize the query before executing it!!!
     cursor.execute(query, query_params)
     # this will actually commit any changes to the database. without this no
     # changes will be committed!
@@ -52,9 +52,13 @@ def execute_query(db_connection=None, query=None, query_params=()):
 if __name__ == '__main__':
     print("Executing a sample query on the database using the credentials from db_credentials.py")
     db = connect_to_database()
-    query = "SELECT * from bsg_people;"
+    query = "SELECT * from books;"
     results = execute_query(db, query)
-    print("Printing results of %s" % query)
+    for book in results:
+        # print(book)
+        print(book[0])
+
+    # print("Printing results of %s" % query)
 
     for r in results.fetchall():
         print(r)
