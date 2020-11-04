@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+  <style>
+    #orderDisplay {
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border-style: solid;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
+  <h2 class="article-title">List of the orders of the user</h2>
+{#  <div class="container" id="orderDisplay">#}
+  <div id="orderDisplay">
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Find your orders with your email address.</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <h3>John, here are your Orders:</h3>
+    <table style="width:100%">
+      <tbody><tr>
+        <th>OrderID</th>
+        <th>Book Title</th>
+        <th>Qty.</th>
+      </tr>
+      <tr>
+        <td rowspan="2">10123</td>
+        <td>To Kill a Mockingbird</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Murder on the Orient Express</td>
+        <td>1</td>
+      </tr>
+    </tbody></table>
+  </div>
+  <br>
+{% endblock content %}

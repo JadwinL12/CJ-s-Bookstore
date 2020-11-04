@@ -48,4 +48,16 @@ p { margin: 2px}
 .navbar-inverse .navbar-nav>li>a {
   color: white;
 }
+.thumbnail.caption {
+    height: 100px;
+}
+#orderDisplay {
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border-style: solid;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
 

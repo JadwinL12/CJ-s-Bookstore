@@ -1,101 +1,157 @@
 {% extends "layout.html" %}
 {% block content %}
-  <h2 class="article-title">Home Page - need to be updated</h2>
-  {# The rows will be created from the database #}
-{#  Can add a filter dropdown list here #}
+  <style>
+    .caption {
+      height: 100px;
+    }
+  </style>
   <div class="row">
-    {% for book in books %}
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="thumbnail">
-        <!-- Can use the ISBN to generate the picture automatically -->
-        <img src="http://covers.openlibrary.org/b/isbn/{{ book[0] }}-M.jpg" alt="...">
-        <div class="caption">
-{#          <p class="ISBN">ISBN: 978-0358004417</p>#}
-          <p class="ISBN">ISBN: {{ book[0] }}</p>
-          <h4>{{ book[1] }}</h4>
-          <!-- Author need to be queried. Maybe not shown on home page -->
-{#          <p class="author">by Author </p>#}
-          <p><i class="glyphicon glyphicon-usd"></i>{{ book[2] }}</p>
-          <p class="button"><a href="#" class="btn btn-primary" role="button">Add to Cart</a> <a href="#" class="btn btn-default" role="button">Buy Now</a></p>
+    <div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-02.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span>Arts &amp; Photography</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt="" src="https://m.media-amazon.com/images/G/01/img15/books/icon/27400_icon_140x140_02.png"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Biographies &amp; Memoirs</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-07.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Business &amp; Investing</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-04.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Children's Books</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-03.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Cookbooks, Food</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-06.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">History</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div data-value="Literature &amp; Fiction" class="a-row filterLink">
+          <div>
+            <img alt=""
+                 src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-01.jpg"
+                 height="75px" role="presentation">
+            <div></div>
+          </div>
+          <div>
+            <span class="a-color-base gb-size-small faceoutText aok-block">Literature &amp; Fiction</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src=" https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-10.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Mystery &amp; Suspense</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt="" src="https://m.media-amazon.com/images/G/01/img15/books/icon/27400_icon_140x140_04.png"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Romance</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt="" src="https://m.media-amazon.com/images/G/01/img15/books/icon/27400_icon_140x140_05.png"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Sci-Fi &amp; Fantasy</span>
+        </div>
+      </div>
+      <div class="col-lg-4, col-md-3, col-sm-2">
+        <div>
+          <img alt=""
+               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-09.jpg"
+               height="75px" role="presentation">
+          <div></div>
+        </div>
+        <div>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Teens &amp; Young Adult</span>
         </div>
       </div>
     </div>
-    {% endfor %}
+  </div>
+  {# The rows will be created from the database #}
+  {#  Can add a filter dropdown list here #}
+  <div class="row">
+    {% for book in books %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="thumbnail">
+          <!-- Can use the ISBN to generate the picture automatically -->
+          <img src="http://covers.openlibrary.org/b/isbn/{{ book[0] }}-M.jpg" alt="...">
+          <div class="caption">
+            {#          <p class="ISBN">ISBN: 978-0358004417</p>#}
+            <p class="ISBN">ISBN: {{ book[0] }}</p>
+            <h4>{{ book[1] }}</h4>
+            <!-- Author need to be queried. Maybe not shown on home page -->
+            {#          <p class="author">by Author </p>#}
 
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="http://covers.openlibrary.org/b/isbn/9780140328721-M.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <p class="ISBN">ISBN: 978-0140328721</p>#}
-{#            <h4>Fantastic Mr. Fox</h4>#}
-{#            <p></p>#}
-{#            <p><i class="glyphicon glyphicon-usd"></i>35</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Add to Cart</a> <a href="#" class="btn btn-default" role="button">Buy Now</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="http://covers.openlibrary.org/b/isbn/9780789479358-M.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <p class="ISBN">ISBN: 978-0789479358</p>#}
-{#            <h4>Dinosaur Encyclopedia</h4>#}
-{#            <p></p>#}
-{#            <p><i class="glyphicon glyphicon-usd"></i>35</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Add to Cart</a> <a href="#" class="btn btn-default" role="button">Buy Now</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="https://images-na.ssl-images-amazon.com/images/I/51JS3JP8YKL._AC_SX184_.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <h3>Thumbnail label</h3>#}
-{#            <p>...</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{##}
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="https://images-na.ssl-images-amazon.com/images/I/51JS3JP8YKL._AC_SX184_.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <h3>Thumbnail label</h3>#}
-{#            <p>...</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="https://images-na.ssl-images-amazon.com/images/I/51JS3JP8YKL._AC_SX184_.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <h3>Thumbnail label</h3>#}
-{#            <p>...</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="https://images-na.ssl-images-amazon.com/images/I/51JS3JP8YKL._AC_SX184_.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <h3>Thumbnail label</h3>#}
-{#            <p>...</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#      <div class="col-sm-6 col-md-4 col-lg-3">#}
-{#        <div class="thumbnail">#}
-{#          <img src="https://images-na.ssl-images-amazon.com/images/I/51JS3JP8YKL._AC_SX184_.jpg" alt="...">#}
-{#          <div class="caption">#}
-{#            <h3>Thumbnail label</h3>#}
-{#            <p>...</p>#}
-{#            <p class="button"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
+          </div>
+          <div>
+            <p><i class="glyphicon glyphicon-usd"></i>{{ book[2] }}</p>
+            <p class="button"><a href="#" class="btn btn-info" role="button">Add to Cart</a> <a
+                    href="{{ url_for('mypayments') }}" class="btn btn-info" role="button">Buy Now</a></p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
   </div>
 {% endblock content %}

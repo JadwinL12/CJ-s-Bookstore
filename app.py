@@ -14,19 +14,28 @@ def home():
     return render_template("home.html", books=result)
 
 
-@app.route('/signup')
-def signup():
-    return render_template("signup.html")
+@app.route('/newcustomer')
+def newcustomer():
+    return render_template("newcustomer.html")
 
+@app.route('/mypayments')
+def mypayments():
 
-@app.route('/login')
-def login():
-    return render_template("login.html")
+    return render_template("mypayments.html")
 
+@app.route('/makepayment')
+def makepayment():
 
-@app.route('/cart')
-def cart():
-    return render_template("cart.html")
+    return render_template("makepayment.html")
+
+@app.route('/myorders')
+def myorders():
+
+    return render_template("myorders.html")
+
+@app.route('/placeorder')
+def placeorder():
+    return render_template("placeorder.html")
 
 
 if __name__ == '__main__':
