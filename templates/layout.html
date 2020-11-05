@@ -16,32 +16,6 @@
   {% else %}
     <title>C&J's Bookstore</title>
   {% endif %}
-  {# This part of css code will not work on chrome if moved to app.css. Not sure why yet.#}
-  {#  <style type="text/css">#}
-  {#    body { padding-top: 70px; }#}
-  {#    .jumbotron {#}
-  {#      color: #2c3e50;#}
-  {#      background: #ecf0f1;#}
-  {#    }#}
-  {#    .navbar-inverse {#}
-  {#      background: #2c3e50;#}
-  {#      color: white;#}
-  {#    }#}
-  {#    .navbar-inverse .navbar-brand, .navbar-inverse a{#}
-  {#      color:white;#}
-  {#    }#}
-  {#    .navbar-inverse .navbar-nav>li>a {#}
-  {#      color: white;#}
-  {#    }#}
-  {#    .caption {#}
-  {#      height: 100px;#}
-  {#    }#}
-  {#    #orderDisplay {#}
-  {#    padding: 12px 20px;#}
-  {#    box-sizing: border-box;#}
-  {#    border-style: solid;#}
-  {#    }#}
-  {#  </style>#}
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -64,7 +38,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url_for('newcustomer') }}">NewCustomer</a></li>
+        <li><a href="{{ url_for('newcustomer') }}">{{ customername }}</a></li>
         <li><a href="{{ url_for('mypayments') }}">MyPayments</a></li>
         <li><a href="{{ url_for('makepayment') }}">MakePayment</a></li>
         <li><a href="{{ url_for('myorders') }}">MyOrders</a></li>
