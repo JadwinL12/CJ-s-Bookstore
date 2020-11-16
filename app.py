@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 from flask import request
 from db_connector.db_connector import connect_to_database, execute_query
+import requests
 
 app = Flask(__name__)
 customername = "NewCustomer"
+
 
 @app.route('/')
 @app.route('/home')
@@ -13,6 +15,46 @@ def home():
     result = execute_query(db_connection, query).fetchall()
     # print(result)
     return render_template("home.html", books=result, customername=customername)
+
+
+@app.route('/newbook', methods=['POST', 'GET'])
+def newbook():
+    db_connection = connect_to_database()
+    if request.method == "POST":
+        if 'ISBN' in request.form:
+            ISBN = request.form['ISBN']
+            book = execute_query(db_connection, "SELECT * FROM books WHERE bookID=%s", [ISBN]).fetchall()
+            if book:
+                return render_template("newbook.html", book=book)
+            else:
+                book_not_found = "The book is not in the bookstore. Try again or create the book info into our bookstore below."
+                return render_template("newbook.html", error=book_not_found)
+        if 'inputISBN' in request.form:
+            ISBN = request.form['inputISBN']
+            title = request.form['inputTitle']
+            cost = request.form['inputCost']
+            year = request.form['yearPublish']
+            inventory = request.form['inventory']
+            book = execute_query(db_connection, "SELECT * FROM books WHERE bookID=%s", [ISBN]).fetchall()
+            if book:
+                book_exist = "The book is already in our bookstore."
+                return render_template("newbook.html", error=book_exist, book=book)
+            else:
+                query = 'INSERT INTO books (bookID, title, cost, yearPublish, quantityInStock) ' \
+                        'VALUES (%s,%s,%s,%s,%s)'
+                data = (ISBN, title, cost, year, inventory)
+                execute_query(db_connection, query, data)
+                insertSucess = "New Book added!"
+                return render_template("newbook.html", insert=insertSucess, book=book)
+
+
+    # ISBNS = execute_query(db_connection, "SELECT bookID FROM books").fetchall()
+    # print(ISBNS)
+    # booknotfound = "The book can't be found with the provided ISBN. Try again."
+    # book = "http://openlibrary.org/search.json?q=" + "9780358004417"
+    # x = requests.get(book)
+    # print(x.content)
+    return render_template("newbook.html")
 
 
 @app.route('/customerinfo', methods=['POST', 'GET'])

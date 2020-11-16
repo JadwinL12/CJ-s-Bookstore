@@ -8,7 +8,9 @@
   {% if error %}
     <h2 class="emailerror">{{ error }}</h2>
   {% else %}
-    <h2>Welcome, our new customer. Please leave your info here.</h2>
+    <h2>Welcome, dear customer. </h2>
+    <small class="form-text text-muted">You can search and update your info if you are registered.</small><br>
+
   {% endif %}
   <form action="" method="post">
     <div class="row">
@@ -22,9 +24,9 @@
       </div><!-- /input-group -->
     </div><!-- /.col-lg-6 -->
   </div><!-- /.row -->
-  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </form>
 
+  <small class="form-text text-muted">Please leave your info here first if you are new to us.</small><br>
 
   <form id="customerinfo" action="/customerinfo" method="post">
     <div class="form-group">

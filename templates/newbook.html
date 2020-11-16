@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+  <style>
+  .error {
+    color:red;
+  }
+  </style>
+  {% if error %}
+    <h2 class="error">{{ error }}</h2>
+  {% else %}
+    <h2>Welcome, dear customer. </h2>
+{#    <small class="form-text text-muted">You can search and add a new book into our bookstore.</small><br>#}
+  {% endif %}
+  <form action="" method="post">
+    <div class="row">
+    <div class="col-lg-12">
+      <div class="input-group">
+          <input type="text" class="form-control" placeholder="See whether a book is already in our bookstore with ISBN..." name="ISBN">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Go!</button>
+          </span>
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+  </form>
+
+  <form id="newbook" action="/newbook" method="post">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputISBN">ISBN</label>
+        <input type="text" class="form-control" id="inputISBN" name="inputISBN" placeholder="ISBN" required maxlength="13"
+               minlength="13"
+               value="{% if book %}{{ book[0][0] }}{% endif %}">
+      </div>
+      <div class="form-group col-md-8">
+        <label for="inputTitle">Book Title</label>
+        <input type="text" class="form-control" id="inputTitle" name="inputTitle" placeholder="inputTitle" required
+               value="{% if book %}{{ book[0][1] }}{% endif %}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputCost">Cost</label>
+        <input type="number" class="form-control" name="inputCost" id="inputCost" required min="0", step="0.01"
+               value="{% if book %}{{ book[0][2] }}{% endif %}">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="yearPublish">Year Publish</label>
+        <input type="number" class="form-control" name="yearPublish" id="yearPublish"
+               value="{% if book %}{{ book[0][3] }}{% endif %}">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inventory">Inventory</label>
+        <input type="text" class="form-control" name="inventory" id="inventory"
+               value="{% if book %}{{ book[0][4] }}{% endif %}">
+      </div>
+    </div>
+
+    <br>
+    <div>
+      <button type="submit" class="btn btn-primary">Create Book Info</button>
+      <small id="insertSucess" class="form-text text-muted">{{ insert }}</small>
+    </div>
+    <br>
+  </form>
+{% endblock content %}
