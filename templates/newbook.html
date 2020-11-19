@@ -15,7 +15,7 @@
     <div class="row">
     <div class="col-lg-12">
       <div class="input-group">
-          <input type="text" class="form-control" placeholder="See whether a book is already in our bookstore with ISBN..." name="ISBN">
+          <input type="text" class="form-control" placeholder="See whether a book is already in our bookstore with ISBN..." name="searchISBN">
           <span class="input-group-btn">
             <button class="btn btn-default" type="submit">Go!</button>
           </span>
@@ -34,7 +34,7 @@
       </div>
       <div class="form-group col-md-8">
         <label for="inputTitle">Book Title</label>
-        <input type="text" class="form-control" id="inputTitle" name="inputTitle" placeholder="inputTitle" required
+        <input type="text" class="form-control" id="inputTitle" name="inputTitle" placeholder="Book Title" required
                value="{% if book %}{{ book[0][1] }}{% endif %}">
       </div>
     </div>
@@ -42,26 +42,103 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="inputCost">Cost</label>
-        <input type="number" class="form-control" name="inputCost" id="inputCost" required min="0", step="0.01"
+        <input type="number" class="form-control" name="inputCost" id="inputCost" placeholder="Cost of book" required min="0", step="0.01"
                value="{% if book %}{{ book[0][2] }}{% endif %}">
       </div>
       <div class="form-group col-md-4">
         <label for="yearPublish">Year Publish</label>
-        <input type="number" class="form-control" name="yearPublish" id="yearPublish"
+        <input type="number" class="form-control" name="yearPublish" id="yearPublish" placeholder="Year Published"
                value="{% if book %}{{ book[0][3] }}{% endif %}">
       </div>
       <div class="form-group col-md-4">
         <label for="inventory">Inventory</label>
-        <input type="text" class="form-control" name="inventory" id="inventory"
+        <input type="number" class="form-control" name="inventory" id="inventory" placeholder="Number of Inventory"
                value="{% if book %}{{ book[0][4] }}{% endif %}">
       </div>
+
     </div>
 
-    <br>
-    <div>
-      <button type="submit" class="btn btn-primary">Create Book Info</button>
-      <small id="insertSucess" class="form-text text-muted">{{ insert }}</small>
+    <div class="form-row">
+      <label class="form-group col-md-12" for="inputCategory">Categories</label>
+{#      <div class="form-group col-md-8">#}
+{#        <label for="inputCategory">Category</label>#}
+{#        <select multiple name="inputCategory" id="inputCategory" class="form-control">#}
+{#          <option value="1" {% if category=='1' %}selected = "selected"{% endif %}>Sci-Fi</option>#}
+{#          <option value="2" {% if category=='2' %}selected = "selected"{% endif %}>Fantasy</option>#}
+{#          <option value="3" {% if category=='3' %}selected = "selected"{% endif %}>Horror</option>#}
+{#          <option value="4" {% if category=='4' %}selected = "selected"{% endif %}>Comedy</option>#}
+{#          <option value="5" {% if category=='5' %}selected = "selected"{% endif %}>Romance</option>#}
+{#          <option value="6" {% if category=='6' %}selected = "selected"{% endif %}>History</option>#}
+{#          <option value="7" {% if category=='7' %}selected = "selected"{% endif %}>Classics</option>#}
+{#          <option value="8" {% if category=='8' %}selected = "selected"{% endif %}>Mystery</option>#}
+{#          <option value="9" {% if category=='9' %}selected = "selected"{% endif %}>Young Adult</option>#}
+{#          <option value="10" {% if category=='10' %}selected = "selected"{% endif %}>True Crime</option>#}
+{#        </select>#}
+{#      </div>#}
+
+{#      <div class="custom-control custom-checkbox custom-control-inline" >#}
+{#        <input type="checkbox-" class="form-check-input" id="exampleCheck1" name="inputCategory" >#}
+{#        <label class="custom-control-label" for="exampleCheck1">Sci-Fi</label>#}
+{#      </div>#}
+{#      <div class="custom-control custom-checkbox custom-control-inline">#}
+{#        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="inputCategory">#}
+{#        <label class="custom-control-label" for="exampleCheck1">Fantasy</label>#}
+{#      </div>#}
+      {# The value of chekcout is used to locate the number of the category #}
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=1 {% if 1 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Sci-Fi</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=2 {% if 2 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Fantasy</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=3 {% if 3 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Horror</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=4 {% if 4 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Comedy</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=5 {% if 5 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Romance</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=6 {% if 6 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">History</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=7 {% if 7 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Classics</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=8 {% if 8 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Mystery</label>
+      </div>
+      <div class="form-group col-md-3">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=9 {% if 9 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">Young Adult</label>
+      </div>
+      <div class="form-group col-md-9">
+        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=10 {% if 10 in categories %}checked{% endif %}>
+        <label class="checkbox-inline" for="customCheckDisabled">True Crime</label>
+      </div>
+
+{#      <div class="form-group col-md-8">#}
+{#        <label for="inputAuthor">Author</label>#}
+{#        <input type="text" class="form-control" id="inputAuthor" name="inputAuthor" placeholder="Book Author" required#}
+{#               value="{% if book %}{{ book[0][1] }}{% endif %}">#}
+{#      </div>#}
+
     </div>
-    <br>
+
+    <div>
+      <button type="submit" class="btn btn-primary">Create/Update Book Info</button>
+      <small id="insertSucess" class="form-text text-muted">{{ insert }}</small>
+      <small id="insertSucess" class="form-text text-muted">{{ update }}</small>
+    </div>
+
   </form>
 {% endblock content %}
