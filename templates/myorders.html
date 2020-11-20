@@ -1,46 +1,71 @@
 
 {% extends "layout.html" %}
 {% block content %}
-  <style>
-    #orderDisplay {
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border-style: solid;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
-  <h2 class="article-title">List of the orders of the user</h2>
-{#  <div class="container" id="orderDisplay">#}
-  <div id="orderDisplay">
-    <form>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Find your orders with your email address.</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="container">
+    <form action="" method="post">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search your Orders with your Email..." name="searchOrders">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </form>
-    <h3>John, here are your Orders:</h3>
-    <table style="width:100%">
-      <tbody><tr>
-        <th>OrderID</th>
-        <th>Book Title</th>
-        <th>Qty.</th>
-      </tr>
-      <tr>
-        <td rowspan="2">10123</td>
-        <td>To Kill a Mockingbird</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Murder on the Orient Express</td>
-        <td>1</td>
-      </tr>
-    </tbody></table>
+
+    <div class="card">
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">John, here are your paid orders:</h3>
+      <div class="card-body">
+        <div id="table" class="table-editable">
+          <span class="table-add float-right mb-3 mr-2"></span>
+          <table class="table table-bordered table-responsive-md table-striped text-center">
+            <thead>
+              <tr>
+                <th class="text-center">Order ID</th>
+                <th class="text-center">ISBN</th>
+                <th class="text-center">Book Title</th>
+                <th class="text-center">Qty.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="pt-3-half" >10123</td>
+                <td class="pt-3-half" >To Kill a Mockingbird</td>
+                <td class="pt-3-half" >9780060194994</td>
+                <td class="pt-3-half" >2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Here are your unpaid orders:</h3>
+      <div class="card-body">
+        <div id="table" class="table-editable">
+          <span class="table-add float-right mb-3 mr-2"></span>
+          <table class="table table-bordered table-responsive-md table-striped text-center">
+            <thead>
+              <tr>
+                <th class="text-center">Order ID</th>
+                <th class="text-center">ISBN</th>
+                <th class="text-center">Book Title</th>
+                <th class="text-center">Qty.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="pt-3-half" >10123</td>
+                <td class="pt-3-half" >I'll Be Gone in the Dark</td>
+                <td class="pt-3-half" >9780062319791</td>
+                <td class="pt-3-half" >1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <br>
 {% endblock content %}

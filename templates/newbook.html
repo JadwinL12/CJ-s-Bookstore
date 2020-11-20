@@ -15,10 +15,10 @@
     <div class="row">
     <div class="col-lg-12">
       <div class="input-group">
-          <input type="text" class="form-control" placeholder="See whether a book is already in our bookstore with ISBN..." name="searchISBN">
-          <span class="input-group-btn">
+        <input type="text" class="form-control" placeholder="See whether a book is already in our bookstore with ISBN..." name="searchISBN">
+        <span class="input-group-btn">
             <button class="btn btn-default" type="submit">Go!</button>
-          </span>
+        </span>
       </div><!-- /input-group -->
     </div><!-- /.col-lg-6 -->
   </div><!-- /.row -->
@@ -55,7 +55,6 @@
         <input type="number" class="form-control" name="inventory" id="inventory" placeholder="Number of Inventory"
                value="{% if book %}{{ book[0][4] }}{% endif %}">
       </div>
-
     </div>
 
     <div class="form-row">
@@ -125,13 +124,6 @@
         <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=10 {% if 10 in categories %}checked{% endif %}>
         <label class="checkbox-inline" for="customCheckDisabled">True Crime</label>
       </div>
-
-{#      <div class="form-group col-md-8">#}
-{#        <label for="inputAuthor">Author</label>#}
-{#        <input type="text" class="form-control" id="inputAuthor" name="inputAuthor" placeholder="Book Author" required#}
-{#               value="{% if book %}{{ book[0][1] }}{% endif %}">#}
-{#      </div>#}
-
     </div>
 
     <div>

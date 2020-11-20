@@ -146,13 +146,34 @@ def customerinfo():
 
     return render_template("customerinfo.html")
 
-@app.route('/mypayments')
-def mypayments():
 
-    return render_template("mypayments.html")
+@app.route('/mypayments', methods=['POST', 'GET'])
+def mypayments():
+    db_connection = connect_to_database()
+    if request.method == "POST":
+        # print(request.form) # will see all the request info from the form
+        if 'searchPayments' in request.form:
+            customeremail = request.form['searchPayments']
+            customername = execute_query(db_connection, "SELECT firstName, lastName FROM customers WHERE email=%s", [customeremail]).fetchall()
+            print(customername[0])
+            query = "SELECT payments.paymentID, customers.firstName, customers.lastName, payments.paymentDate, payments.amount " \
+                    "FROM customers INNER JOIN payments ON customers.customerID=payments.customerID AND customers.email=%s"
+            payments = execute_query(db_connection, query, [customeremail]).fetchall()
+
+            # If return a matching customer, then update the page
+            if payments:
+                total = 0
+                for payment in payments:
+                    total += payment[4]
+                return render_template("mypayments.html", payments=payments, total=total, customername=customername)
+            else:
+                error_not_found = "Can't find your Email. Try again or create a new account on CustomerInfo page."
+                return render_template("mypayments.html", error=error_not_found)
+    return render_template("mypayments.html", customername="")
 
 @app.route('/makepayment')
 def makepayment():
+    db_connection = connect_to_database()
 
     return render_template("makepayment.html")
 

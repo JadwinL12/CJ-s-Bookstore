@@ -9,7 +9,7 @@
     <h2 class="emailerror">{{ error }}</h2>
   {% else %}
     <h2>Welcome, dear customer. </h2>
-    <small class="form-text text-muted">Get your info with Email before you place the order.</small><br>
+    <small class="form-text text-muted">Search your info with your Email or input your info before you place the order.</small><br>
 
   {% endif %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
@@ -20,7 +20,7 @@
     <div class="col-lg-12">
       <div class="input-group">
 {#        action="" means current page#}
-          <input type="email" class="form-control" placeholder="Get your info with Email before you place the order..." name="customeremail">
+          <input type="email" class="form-control" placeholder="Search your info with your Email or input your info before you place the order..." name="customeremail">
           <span class="input-group-btn">
             <button class="btn btn-default" type="submit">Go!</button>
           </span>
@@ -78,7 +78,7 @@
     </div>
 
     <div class="card">
-      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">List of the Books:</h3>
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Books in Shopping Cart:</h3>
       <div class="card-body">
         <div id="table" class="table-editable">
           <span class="table-add float-right mb-3 mr-2"></span>
