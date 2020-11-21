@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <div class="form-row">
+    <label class="form-group col-md-12" for="inputCategory">Here are the available Categories in the store.</label>
+    {% for category in categories %}
+    <div class="form-group col-md-3">
+      <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=1 checked>
+      <label class="checkbox-inline" for="customCheckDisabled">{{ category[1] }}</label>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form action="" method="post">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Create a new category with the name you leave here." name="newCategory" required>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Confirm here to add a new category!</button>
+        </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </form>
+
+{% endblock content %}

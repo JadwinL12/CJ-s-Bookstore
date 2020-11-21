@@ -38,6 +38,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ url_for('category') }}">Categories</a></li>
         <li><a href="{{ url_for('newbook') }}">NewBook</a></li>
         <li><a href="{{ url_for('customerinfo') }}">CustomerInfo</a></li>
         <li><a href="{{ url_for('mypayments') }}">MyPayments</a></li>
@@ -54,17 +55,6 @@
   </div>
 </nav>
 <div class="container">
-{#  <div class="jumbotron">#}
-{#    <h1><i class="fa fa-book"></i> C&J's BookStore </h1>#}
-{#    <p>Welcome to our BookStore!</p>#}
-{#    <p>"As an intellectual object, a book is prototypically a composition of such great length that it takes a#}
-{#      considerable investment of time to compose and a still considerable, though not so extensive, investment of time#}
-{#      to read. In a restricted sense, a book is a self-sufficient section or part of a longer composition, a usage that#}
-{#      reflects the fact that, in antiquity, long works had to be written on several scrolls and each scroll had to be#}
-{#      identified by the book it contained. Each part of Aristotle's Physics is called a book. In an unrestricted sense,#}
-{#      a book is the compositional whole of which such sections, whether called books or chapters or parts, are parts." -#}
-{#      Quoted from Wiki.</p>#}
-{#  </div>#}
   {% block content %}{% endblock %}
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>

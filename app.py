@@ -17,20 +17,34 @@ def home():
     return render_template("home.html", books=result, customername=customername)
 
 
+@app.route('/category', methods=['POST', 'GET'])
+def category():
+    db_connection = connect_to_database()
+    if request.method == "POST":
+        newCategory = request.form['newCategory']
+        query = "INSERT INTO categories (categoryName) VALUES (%s)"
+        execute_query(db_connection, query, [newCategory])
+
+    query = "SELECT categoryID, categoryName FROM categories"
+    categories = execute_query(db_connection, query).fetchall()
+    return render_template("category.html", categories=categories)
+
+
 @app.route('/newbook', methods=['POST', 'GET'])
 def newbook():
     db_connection = connect_to_database()
+    allCategories = execute_query(db_connection, "SELECT categoryID, categoryName FROM categories").fetchall()
     if request.method == "POST":
         # Search ISBN Form.
         if 'searchISBN' in request.form:
             ISBN = request.form['searchISBN']
             book = execute_query(db_connection, "SELECT * FROM books WHERE bookID=%s", [ISBN]).fetchall()
-            queries = execute_query(db_connection, "SELECT * FROM bookscategories WHERE bookID=%s", [ISBN]).fetchall()
-            categories = []
-            for query in queries:
-                categories.append(query[1])
+            bookCategories = execute_query(db_connection, "SELECT * FROM bookscategories WHERE bookID=%s", [ISBN]).fetchall()
+            categoryIDs = []
+            for bookCategory in bookCategories:
+                categoryIDs.append(bookCategory[1])
             if book:
-                return render_template("newbook.html", book=book, categories=categories)
+                return render_template("newbook.html", book=book, categoryIDs=categoryIDs, allCategories=allCategories)
             else:
                 book_not_found = "The book is not in the bookstore. Try again or create the book info into our bookstore below."
                 return render_template("newbook.html", error=book_not_found)
@@ -52,40 +66,40 @@ def newbook():
                 execute_query(db_connection, query, data)
 
                 # Read original categories in booksCategories table based on bookID
-                queries = execute_query(db_connection, "SELECT * FROM bookscategories WHERE bookID=%s",
+                bookCategories = execute_query(db_connection, "SELECT * FROM bookscategories WHERE bookID=%s",
                                         [ISBN]).fetchall()
-                readCategories = []
-                for query in queries:
-                    readCategories.append(query[1])
+                originalCategoryIDs = []
+                for bookCategory in bookCategories:
+                    originalCategoryIDs.append(bookCategory[1])
                 # Compare the new Categories and original Categories, insert or delete rows in booksCategories table
                 for i in range(1,11):
-                    if i in inputCategories and i not in readCategories:
+                    if i in inputCategories and i not in originalCategoryIDs:
                         insertCategoryQuery = "INSERT INTO bookscategories(bookID, categoryID) VALUES (%s,%s)"
                         data = (ISBN, i)
                         execute_query(db_connection, insertCategoryQuery, data)
-                    if i not in inputCategories and i in readCategories:
+                    if i not in inputCategories and i in originalCategoryIDs:
                         deleteCategoryQuery = "DELETE FROM bookscategories WHERE bookID=%s and categoryID=%s"
                         data = (ISBN, i)
                         execute_query(db_connection, deleteCategoryQuery, data)
 
                 bookUpdated = "The book info has been updated"
-                return render_template("newbook.html", update=bookUpdated, book=book, categories=inputCategories)
+                return render_template("newbook.html", update=bookUpdated, book=book, categoryIDs=inputCategories, allCategories=allCategories)
             else:
                 # Insert a new book into books table
                 query = 'INSERT INTO books (bookID, title, cost, yearPublish, quantityInStock) ' \
                         'VALUES (%s,%s,%s,%s,%s)'
                 data = (ISBN, title, cost, year, inventory)
                 execute_query(db_connection, query, data)
-                # Insert all categories into booksCategories table for a new book
+                # Insert all selected categories into booksCategories table for a new book
                 for i in inputCategories:
                     insertCategoryQuery = "INSERT INTO bookscategories(bookID, categoryID) VALUES (%s,%s)"
                     data = (ISBN, i)
                     execute_query(db_connection, insertCategoryQuery, data)
                 book = execute_query(db_connection, "SELECT * FROM books WHERE bookID=%s", [ISBN]).fetchall()
                 insertSucess = "New Book added!"
-                return render_template("newbook.html", insert=insertSucess, book=book, categories=inputCategories)
+                return render_template("newbook.html", insert=insertSucess, book=book, categoryIDs=inputCategories, allCategories=allCategories)
 
-    return render_template("newbook.html")
+    return render_template("newbook.html", allCategories=allCategories)
 
 
 @app.route('/customerinfo', methods=['POST', 'GET'])

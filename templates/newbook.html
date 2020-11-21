@@ -59,78 +59,18 @@
 
     <div class="form-row">
       <label class="form-group col-md-12" for="inputCategory">Categories</label>
-{#      <div class="form-group col-md-8">#}
-{#        <label for="inputCategory">Category</label>#}
-{#        <select multiple name="inputCategory" id="inputCategory" class="form-control">#}
-{#          <option value="1" {% if category=='1' %}selected = "selected"{% endif %}>Sci-Fi</option>#}
-{#          <option value="2" {% if category=='2' %}selected = "selected"{% endif %}>Fantasy</option>#}
-{#          <option value="3" {% if category=='3' %}selected = "selected"{% endif %}>Horror</option>#}
-{#          <option value="4" {% if category=='4' %}selected = "selected"{% endif %}>Comedy</option>#}
-{#          <option value="5" {% if category=='5' %}selected = "selected"{% endif %}>Romance</option>#}
-{#          <option value="6" {% if category=='6' %}selected = "selected"{% endif %}>History</option>#}
-{#          <option value="7" {% if category=='7' %}selected = "selected"{% endif %}>Classics</option>#}
-{#          <option value="8" {% if category=='8' %}selected = "selected"{% endif %}>Mystery</option>#}
-{#          <option value="9" {% if category=='9' %}selected = "selected"{% endif %}>Young Adult</option>#}
-{#          <option value="10" {% if category=='10' %}selected = "selected"{% endif %}>True Crime</option>#}
-{#        </select>#}
-{#      </div>#}
-
-{#      <div class="custom-control custom-checkbox custom-control-inline" >#}
-{#        <input type="checkbox-" class="form-check-input" id="exampleCheck1" name="inputCategory" >#}
-{#        <label class="custom-control-label" for="exampleCheck1">Sci-Fi</label>#}
-{#      </div>#}
-{#      <div class="custom-control custom-checkbox custom-control-inline">#}
-{#        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="inputCategory">#}
-{#        <label class="custom-control-label" for="exampleCheck1">Fantasy</label>#}
-{#      </div>#}
-      {# The value of chekcout is used to locate the number of the category #}
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=1 {% if 1 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Sci-Fi</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=2 {% if 2 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Fantasy</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=3 {% if 3 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Horror</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=4 {% if 4 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Comedy</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=5 {% if 5 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Romance</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=6 {% if 6 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">History</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=7 {% if 7 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Classics</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=8 {% if 8 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Mystery</label>
-      </div>
-      <div class="form-group col-md-3">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=9 {% if 9 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">Young Adult</label>
-      </div>
-      <div class="form-group col-md-9">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=10 {% if 10 in categories %}checked{% endif %}>
-        <label class="checkbox-inline" for="customCheckDisabled">True Crime</label>
-      </div>
+      {% for category in allCategories %}
+          <div class="form-group col-md-3">
+            <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value={{ category[0] }} {% if category[0] in categoryIDs %}checked{% endif %}>
+            <label class="checkbox-inline" for="customCheckDisabled">{{ category[1] }}</label>
+          </div>
+      {% endfor %}
     </div>
 
-    <div>
-      <button type="submit" class="btn btn-primary">Create/Update Book Info</button>
+    <div class="form-row col-md-12">
+      <button type="submit" class="btn btn-primary" class="form-group col-md-12">Create/Update Book Info</button>
       <small id="insertSucess" class="form-text text-muted">{{ insert }}</small>
       <small id="insertSucess" class="form-text text-muted">{{ update }}</small>
     </div>
-
   </form>
 {% endblock content %}
