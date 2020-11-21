@@ -47,7 +47,7 @@ def newbook():
                 return render_template("newbook.html", book=book, categoryIDs=categoryIDs, allCategories=allCategories)
             else:
                 book_not_found = "The book is not in the bookstore. Try again or create the book info into our bookstore below."
-                return render_template("newbook.html", error=book_not_found)
+                return render_template("newbook.html", error=book_not_found, categoryIDs=categoryIDs, allCategories=allCategories)
         # Input ISBN Form.
         if 'inputISBN' in request.form:
             ISBN = request.form['inputISBN']
