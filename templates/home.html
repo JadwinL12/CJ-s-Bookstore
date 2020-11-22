@@ -21,27 +21,32 @@
   <div class="row">
     <div>
       <div class="col-lg-4, col-md-3, col-sm-2">
-        <div>
-          <img alt=""
-               src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-02.jpg"
-               height="75px" role="presentation">
-          <div></div>
-        </div>
-        <div>
-          <span>Arts &amp; Photography</span>
-        </div>
+        <a href="{{ url_for('home', categoryID='2') }}">
+          <div>
+            <img alt=""
+                 src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-02.jpg"
+                 height="75px" role="presentation">
+            <div></div>
+          </div>
+          <div>
+            <span>Fantasy</span>
+          </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='7') }}">
         <div>
           <img alt="" src="https://m.media-amazon.com/images/G/01/img15/books/icon/27400_icon_140x140_02.png"
                height="75px" role="presentation">
           <div></div>
         </div>
         <div>
-          <span class="a-color-base gb-size-small faceoutText aok-block">Biographies &amp; Memoirs</span>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Classics</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='4') }}">
         <div>
           <img alt=""
                src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-07.jpg"
@@ -49,10 +54,12 @@
           <div></div>
         </div>
         <div>
-          <span class="a-color-base gb-size-small faceoutText aok-block">Business &amp; Investing</span>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Comedy</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='8') }}">
         <div>
           <img alt=""
                src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-04.jpg"
@@ -60,10 +67,12 @@
           <div></div>
         </div>
         <div>
-          <span class="a-color-base gb-size-small faceoutText aok-block">Children's Books</span>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Mystery</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='') }}">
         <div>
           <img alt=""
                src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-03.jpg"
@@ -73,8 +82,10 @@
         <div>
           <span class="a-color-base gb-size-small faceoutText aok-block">Cookbooks, Food</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='6') }}">
         <div>
           <img alt=""
                src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-06.jpg"
@@ -84,8 +95,10 @@
         <div>
           <span class="a-color-base gb-size-small faceoutText aok-block">History</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='3') }}">
         <div data-value="Literature &amp; Fiction" class="a-row filterLink">
           <div>
             <img alt=""
@@ -94,11 +107,13 @@
             <div></div>
           </div>
           <div>
-            <span class="a-color-base gb-size-small faceoutText aok-block">Literature &amp; Fiction</span>
+            <span class="a-color-base gb-size-small faceoutText aok-block">Horror</span>
           </div>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='10') }}">
         <div>
           <img alt=""
                src=" https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-10.jpg"
@@ -106,10 +121,12 @@
           <div></div>
         </div>
         <div>
-          <span class="a-color-base gb-size-small faceoutText aok-block">Mystery &amp; Suspense</span>
+          <span class="a-color-base gb-size-small faceoutText aok-block">True Crime</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='5') }}">
         <div>
           <img alt="" src="https://m.media-amazon.com/images/G/01/img15/books/icon/27400_icon_140x140_04.png"
                height="75px" role="presentation">
@@ -118,18 +135,22 @@
         <div>
           <span class="a-color-base gb-size-small faceoutText aok-block">Romance</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='1') }}">
         <div>
           <img alt="" src="https://m.media-amazon.com/images/G/01/img15/books/icon/27400_icon_140x140_05.png"
                height="75px" role="presentation">
           <div></div>
         </div>
         <div>
-          <span class="a-color-base gb-size-small faceoutText aok-block">Sci-Fi &amp; Fantasy</span>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Sci-Fi</span>
         </div>
+        </a>
       </div>
       <div class="col-lg-4, col-md-3, col-sm-2">
+        <a href="{{ url_for('home', categoryID='9') }}">
         <div>
           <img alt=""
                src="https://m.media-amazon.com/images/G/01/img14/books/icons/11753_books_holiday-branding-icon-evergreen-09.jpg"
@@ -137,8 +158,9 @@
           <div></div>
         </div>
         <div>
-          <span class="a-color-base gb-size-small faceoutText aok-block">Teens &amp; Young Adult</span>
+          <span class="a-color-base gb-size-small faceoutText aok-block">Young Adult</span>
         </div>
+        </a>
       </div>
     </div>
   </div>
@@ -152,7 +174,6 @@
           <!-- Can use the ISBN to generate the picture automatically -->
           <img src="http://covers.openlibrary.org/b/isbn/{{ book[0] }}-M.jpg" alt="...">
           <div class="caption">
-            {#          <p class="ISBN">ISBN: 978-0358004417</p>#}
             <p class="ISBN">ISBN: {{ book[0] }}</p>
             <h4>{{ book[1] }}</h4>
             <!-- Author need to be queried. Maybe not shown on home page -->

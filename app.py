@@ -11,10 +11,16 @@ customername = "NewCustomer"
 @app.route('/home')
 def home():
     db_connection = connect_to_database()
-    query = "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books;"
-    result = execute_query(db_connection, query).fetchall()
+    categoryID = request.args.get('categoryID')
+    if categoryID:
+        books = execute_query(db_connection,"SELECT B.bookID, B.title, B.cost, B.yearPublish, B.quantityInStock, C.categoryName FROM books B "
+                              "JOIN bookscategories BC ON B.bookID = BC.bookID "
+                              "JOIN categories C ON BC.categoryID = C.categoryID AND C.categoryID =%s ", [categoryID]).fetchall()
+    else:
+        books = execute_query(db_connection, "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books;").fetchall()
+
     # print(result)
-    return render_template("home.html", books=result, customername=customername)
+    return render_template("home.html", books=books)
 
 
 @app.route('/category', methods=['POST', 'GET'])
