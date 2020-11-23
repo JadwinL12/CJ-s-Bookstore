@@ -175,7 +175,6 @@ def mypayments():
         if 'searchPayments' in request.form:
             customeremail = request.form['searchPayments']
             customername = execute_query(db_connection, "SELECT firstName, lastName FROM customers WHERE email=%s", [customeremail]).fetchall()
-            print(customername[0])
             query = "SELECT payments.paymentID, customers.firstName, customers.lastName, payments.paymentDate, payments.amount " \
                     "FROM customers INNER JOIN payments ON customers.customerID=payments.customerID AND customers.email=%s"
             payments = execute_query(db_connection, query, [customeremail]).fetchall()
@@ -191,9 +190,31 @@ def mypayments():
                 return render_template("mypayments.html", error=error_not_found)
     return render_template("mypayments.html", customername="")
 
-@app.route('/makepayment')
+@app.route('/makepayment', methods=['POST', 'GET'])
 def makepayment():
     db_connection = connect_to_database()
+    if request.method == "POST":
+      if 'searchUnPaid' in request.form:
+        customeremail = request.form['searchUnPaid']
+        customername = execute_query(db_connection, "SELECT firstName, lastName FROM customers WHERE email=%s", [customeremail]).fetchall()
+        queryUnPaid = 'SELECT orders.orderID, customers.firstName, customers.lastName, booksorders.bookID, booksorders.quantity, booksorders.sellingPrice, books.title, customers.customerID FROM orders ' \
+                         'JOIN customers ON orders.customerID=customers.customerID ' \
+                         'JOIN booksorders ON orders.orderID=booksorders.orderID ' \
+                         'JOIN books ON books.bookID=booksorders.bookID WHERE customers.email=%s AND orders.paid=%s;'
+        dataUnPaid = ([customeremail], 'FALSE')
+        ordersUnPaid = execute_query(db_connection, queryUnPaid, dataUnPaid).fetchall()
+        total = 0
+        for orderUnPaid in ordersUnPaid:
+            total += orderUnPaid[4]*orderUnPaid[5]
+        return render_template("makepayment.html", ordersUnPaid=ordersUnPaid, customername=customername, customeremail=customeremail, total=total)
+      if 'customerID' in request.form:
+        customerID = request.form['customerID']
+        amount = request.form['total']
+        paymentEmail = request.form['paidBy']
+        customerID_makePayment = execute_query(db_connection,"SELECT customerID FROM customers WHERE email=%s", ([paymentEmail])).fetchall()
+        execute_query(db_connection, "INSERT INTO payments (customerID, paymentDate, amount) VALUES (%s, %s, %s)", ([customerID_makePayment],'2020-11-11', [amount]))
+        execute_query(db_connection, "UPDATE orders SET paid='1' WHERE customerID=%s", (customerID))
+        return render_template("makepayment.html", )
 
     return render_template("makepayment.html")
 
