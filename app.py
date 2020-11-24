@@ -8,9 +8,14 @@ customername = "NewCustomer"
 
 
 @app.route('/')
-@app.route('/home')
+@app.route('/home', methods=['POST', 'GET'])
 def home():
     db_connection = connect_to_database()
+    if request.method =="POST":
+        searchTitle = request.form['searchTitle']
+        searchTitle = "%"+searchTitle+"%"
+        books = execute_query(db_connection, "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books WHERE title LIKE %s", ([searchTitle])).fetchall()
+        return render_template("home.html", books=books)
     categoryID = request.args.get('categoryID')
     if categoryID:
         books = execute_query(db_connection,"SELECT B.bookID, B.title, B.cost, B.yearPublish, B.quantityInStock, C.categoryName FROM books B "
@@ -193,6 +198,7 @@ def mypayments():
 @app.route('/makepayment', methods=['POST', 'GET'])
 def makepayment():
     db_connection = connect_to_database()
+    paid = False
     if request.method == "POST":
       if 'searchUnPaid' in request.form:
         customeremail = request.form['searchUnPaid']
@@ -207,20 +213,43 @@ def makepayment():
         for orderUnPaid in ordersUnPaid:
             total += orderUnPaid[4]*orderUnPaid[5]
         return render_template("makepayment.html", ordersUnPaid=ordersUnPaid, customername=customername, customeremail=customeremail, total=total)
+      # With CustomerID means the search result is displayed already
       if 'customerID' in request.form:
+        orderIDs = request.form.getlist('orderID')
+        qtys = request.form.getlist('qty')
+        # customerIDs = list(map(int))
+        # bookID = request.form['bookID']
+        # booksorders = []
+        # orderIDs = []
+        # for form in request.form:
+        #     print()
+        #     print(form)
+        #     inputCategories = request.form.getlist('inputCategory')
+        #     inputCategories = list(map(int, inputCategories))
+
+
         customerID = request.form['customerID']
         amount = request.form['total']
         paymentEmail = request.form['paidBy']
         customerID_makePayment = execute_query(db_connection,"SELECT customerID FROM customers WHERE email=%s", ([paymentEmail])).fetchall()
         execute_query(db_connection, "INSERT INTO payments (customerID, paymentDate, amount) VALUES (%s, %s, %s)", ([customerID_makePayment],'2020-11-11', [amount]))
-        execute_query(db_connection, "UPDATE orders SET paid='1' WHERE customerID=%s", (customerID))
-        return render_template("makepayment.html", )
+        execute_query(db_connection, "UPDATE orders SET paid='1' WHERE customerID=%s", ([customerID]))
+        paid = True
+        return render_template("makepayment.html", paid=paid)
 
     return render_template("makepayment.html")
 
-@app.route('/myorders')
+@app.route('/myorders', methods=['POST', 'GET'])
 def myorders():
-
+    db_connection = connect_to_database()
+    if request.method == "POST":
+        customeremail = request.form['searchOrders']
+        query = "SELECT O.orderID, B.bookID, C.firstName, C.lastName, B.title, BO.quantity, O.paid FROM customers C " \
+                "LEFT JOIN orders O ON C.customerID = O.customerID " \
+                "LEFT JOIN booksorders BO ON BO.orderID = O.orderID " \
+                "LEFT JOIN books B ON B.bookID = BO.bookID WHERE c.email=%s"
+        orders = execute_query(db_connection, query, ([customeremail])).fetchall()
+        return render_template("myorders.html", orders=orders)
     return render_template("myorders.html")
 
 @app.route('/placeorder/<ISBN>', methods=['POST', 'GET'])

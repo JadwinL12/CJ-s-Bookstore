@@ -33,25 +33,21 @@
                 <th class="text-center">Book ID</th>
                 <th class="text-center">Book Title</th>
                 <th class="text-center">Qty.</th>
-                <th class="text-center">Remove</th>
+                <th class="text-center">Confirm Change</th>
               </tr>
             </thead>
             <tbody>
               {% for orderUnPaid in ordersUnPaid %}
               <tr>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="customerID" value="{{ orderUnPaid[7] }}" readonly></td>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="orderID" value="{{ orderUnPaid[0] }}" readonly></td>
+                <td class="pt-3-half" ><input type="text" class="form-control" name="orderID{{ i }}" value="{{ orderUnPaid[0] }}" readonly></td>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="bookID" value="{{ orderUnPaid[3] }}" readonly></td>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="bookTitle" value="{{ orderUnPaid[6] }}" readonly></td>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="qty" value="{{ orderUnPaid[4] }}"></td>
-{#                <td class="pt-3-half" >{{ orderUnPaid[0] }}</td>#}
-{#                <td class="pt-3-half" >{{ orderUnPaid[3] }}</td>#}
-{#                <td class="pt-3-half" >{{ orderUnPaid[6] }}</td>#}
-{#                <td class="pt-3-half" contenteditable="true">{{ orderUnPaid[4] }}</td>#}
                 <td>
-                  <span class="table-remove"><button type="button"
-                      class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                  <span class="table-remove"><button type="submit" class="btn btn-danger btn-rounded btn-sm my-0">Confirm</button></span>
                 </td>
+                value
               </tr>
               {% endfor %}
               <tr>
@@ -70,5 +66,8 @@
       </div>
     </div>
   </form>
+  {% if paid %}
+    <h4>All your Orders have been paid. You can search your payments on <a href="mypayments">MyPayments</a> page.</h4>
+  {% endif %}
 </div>
 {% endblock content %}

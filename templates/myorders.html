@@ -1,23 +1,35 @@
-
 {% extends "layout.html" %}
 {% block content %}
-  <div class="container">
+{#  <div class="container">#}
+{#    <form action="" method="post">#}
+{#      <div class="row">#}
+{#        <div class="col-lg-12">#}
+{#          <div class="input-group">#}
+{#            <input type="text" class="form-control" placeholder="Search your Orders with your Email..." name="searchOrders">#}
+{#            <span class="input-group-btn">#}
+{#            <button class="btn btn-default" type="button">Go!</button>#}
+{#          </span>#}
+{#          </div><!-- /input-group -->#}
+{#        </div><!-- /.col-lg-6 -->#}
+{#      </div><!-- /.row -->#}
+{#      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+{#    </form>#}
+
     <form action="" method="post">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search your Orders with your Email..." name="searchOrders">
-            <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Go!</button>
-          </span>
-          </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
-      </div><!-- /.row -->
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </form>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+          <input type="email" class="form-control" placeholder="Search your Orders with Email..." name="searchOrders">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Go!</button>
+        </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </form>
 
     <div class="card">
-      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">John, here are your paid orders:</h3>
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{% if orders %}{{ orders[0][2] }}, {{ orders[0][3] }} here are your paid orders:{% endif %}</h3>
       <div class="card-body">
         <div id="table" class="table-editable">
           <span class="table-add float-right mb-3 mr-2"></span>
@@ -28,39 +40,26 @@
                 <th class="text-center">ISBN</th>
                 <th class="text-center">Book Title</th>
                 <th class="text-center">Qty.</th>
+                <th class="text-center">Paid</th>
               </tr>
             </thead>
             <tbody>
+            {% for order in orders %}
               <tr>
-                <td class="pt-3-half" >10123</td>
-                <td class="pt-3-half" >To Kill a Mockingbird</td>
-                <td class="pt-3-half" >9780060194994</td>
-                <td class="pt-3-half" >2</td>
+                <td class="pt-3-half" >{{ order[0] }}</td>
+                <td class="pt-3-half" >{{ order[1] }}</td>
+                <td class="pt-3-half" >{{ order[4] }}</td>
+                <td class="pt-3-half" >{{ order[5] }}</td>
+                <td class="pt-3-half" >
+                  {% if order[6]==0 %}
+                    No
+                  {% endif %}
+                  {% if order[6]==1 %}
+                    Yes
+                  {% endif %}
+                </td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Here are your unpaid orders:</h3>
-      <div class="card-body">
-        <div id="table" class="table-editable">
-          <span class="table-add float-right mb-3 mr-2"></span>
-          <table class="table table-bordered table-responsive-md table-striped text-center">
-            <thead>
-              <tr>
-                <th class="text-center">Order ID</th>
-                <th class="text-center">ISBN</th>
-                <th class="text-center">Book Title</th>
-                <th class="text-center">Qty.</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="pt-3-half" >10123</td>
-                <td class="pt-3-half" >I'll Be Gone in the Dark</td>
-                <td class="pt-3-half" >9780062319791</td>
-                <td class="pt-3-half" >1</td>
-              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>
