@@ -244,10 +244,10 @@ def myorders():
     db_connection = connect_to_database()
     if request.method == "POST":
         customeremail = request.form['searchOrders']
-        query = "SELECT O.orderID, B.bookID, C.firstName, C.lastName, B.title, BO.quantity, O.paid FROM customers C " \
-                "LEFT JOIN orders O ON C.customerID = O.customerID " \
-                "LEFT JOIN booksorders BO ON BO.orderID = O.orderID " \
-                "LEFT JOIN books B ON B.bookID = BO.bookID WHERE c.email=%s"
+        query = "SELECT orders.orderID, books.bookID, customers.firstName, customers.lastName, books.title, booksorders.quantity, orders.paid FROM customers " \
+                "LEFT JOIN orders ON customers.customerID = orders.customerID " \
+                "LEFT JOIN booksorders ON booksorders.orderID = orders.orderID " \
+                "LEFT JOIN books ON books.bookID = booksorders.bookID  WHERE customers.email=%s"
         orders = execute_query(db_connection, query, ([customeremail])).fetchall()
         return render_template("myorders.html", orders=orders)
     return render_template("myorders.html")
