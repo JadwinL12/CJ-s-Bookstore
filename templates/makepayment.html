@@ -40,24 +40,25 @@
               {% for orderUnPaid in ordersUnPaid %}
               <tr>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="customerID" value="{{ orderUnPaid[7] }}" readonly></td>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="orderID{{ i }}" value="{{ orderUnPaid[0] }}" readonly></td>
+                <td class="pt-3-half" ><input type="text" class="form-control" name="orderID" value="{{ orderUnPaid[0] }}" readonly></td>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="bookID" value="{{ orderUnPaid[3] }}" readonly></td>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="bookTitle" value="{{ orderUnPaid[6] }}" readonly></td>
                 <td class="pt-3-half" ><input type="text" class="form-control" name="qty" value="{{ orderUnPaid[4] }}"></td>
+{#                <td class="pt-3-half" ><input type="submit" class="btn btn-danger btn-rounded btn-sm my-0" name="confirm[]"  placeholder="Confirm"></td>#}
                 <td>
-                  <span class="table-remove"><button type="submit" class="btn btn-danger btn-rounded btn-sm my-0">Confirm</button></span>
+                  <span class="table-remove"><button type="submit" class="btn btn-danger btn-rounded btn-sm my-0" value="{{ orderUnPaid[0] }} {{ orderUnPaid[3] }} {{ orderUnPaid[4] }}" name="confirm">Confirm</button></span>
                 </td>
-                value
+                <input type="hidden" name="originalQty" value={{ orderUnPaid[4] }}>
               </tr>
               {% endfor %}
               <tr>
-                <td colspan="5">Total</td>
+                <td colspan="5">Total Cost:</td>
                 <td><input type="text" class="form-control" name="total" value="{{ total }}" readonly ></td>
               </tr>
               <tr>
                 <td colspan="5" contenteditable="true"> <input type="email" class="form-control" id="inputEmail4" placeholder="" value="{{ customeremail }}" name="paidBy"></td>
                 <td>
-                  <span class="table-remove"><button type="submit" class="btn btn-primary btn-rounded btn-md my-0">MakePayment</button></span>
+                  <span class="table-remove"><button type="submit" class="btn btn-primary btn-rounded btn-md my-0" name="makePayment">MakePayment</button></span>
                 </td>
               </tr>
             </tbody>

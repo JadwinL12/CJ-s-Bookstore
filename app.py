@@ -199,9 +199,32 @@ def mypayments():
 def makepayment():
     db_connection = connect_to_database()
     paid = False
+    update = False
+    if request.method == "GET":
+        print()
     if request.method == "POST":
-      if 'searchUnPaid' in request.form:
-        customeremail = request.form['searchUnPaid']
+      if ('searchUnPaid' in request.form or 'customerID' in request.form) and 'makePayment' not in request.form:
+        if 'searchUnPaid' in request.form:
+          customeremail = request.form['searchUnPaid']
+        if 'customerID' in request.form:
+          # Get original Qty, new(input) Qty and index of the books in the table
+          originalQty = request.form.getlist('originalQty')
+          inputQtys = request.form.getlist('qty')
+          index = ''
+          for i in range(len(originalQty)):
+            if originalQty[i] != inputQtys[i]:
+              index = i
+          # Update the quantity of books if the index is not null
+          if index != '':
+            # Get the orderID, bookID and new Qty based on the Index
+            orderID = request.form.getlist('orderID')[index]
+            bookID = request.form.getlist('bookID')[index]
+            inputQty = inputQtys[index]
+            execute_query(db_connection, "UPDATE booksorders SET quantity=%s WHERE orderID=%s AND bookID=%s",
+                          ([inputQty], [orderID], [bookID]))
+          # Render the page again
+          customerID = request.form['customerID']
+          customeremail = request.form['paidBy']
         customername = execute_query(db_connection, "SELECT firstName, lastName FROM customers WHERE email=%s", [customeremail]).fetchall()
         queryUnPaid = 'SELECT orders.orderID, customers.firstName, customers.lastName, booksorders.bookID, booksorders.quantity, booksorders.sellingPrice, books.title, customers.customerID FROM orders ' \
                          'JOIN customers ON orders.customerID=customers.customerID ' \
@@ -213,30 +236,15 @@ def makepayment():
         for orderUnPaid in ordersUnPaid:
             total += orderUnPaid[4]*orderUnPaid[5]
         return render_template("makepayment.html", ordersUnPaid=ordersUnPaid, customername=customername, customeremail=customeremail, total=total)
-      # With CustomerID means the search result is displayed already
-      if 'customerID' in request.form:
-        orderIDs = request.form.getlist('orderID')
-        qtys = request.form.getlist('qty')
-        # customerIDs = list(map(int))
-        # bookID = request.form['bookID']
-        # booksorders = []
-        # orderIDs = []
-        # for form in request.form:
-        #     print()
-        #     print(form)
-        #     inputCategories = request.form.getlist('inputCategory')
-        #     inputCategories = list(map(int, inputCategories))
-
-
+      else:
         customerID = request.form['customerID']
         amount = request.form['total']
         paymentEmail = request.form['paidBy']
         customerID_makePayment = execute_query(db_connection,"SELECT customerID FROM customers WHERE email=%s", ([paymentEmail])).fetchall()
-        execute_query(db_connection, "INSERT INTO payments (customerID, paymentDate, amount) VALUES (%s, %s, %s)", ([customerID_makePayment],'2020-11-11', [amount]))
+        execute_query(db_connection, "INSERT INTO payments (customerID, paymentDate, amount) VALUES (%s, current_date(), %s)", ([customerID_makePayment], [amount]))
         execute_query(db_connection, "UPDATE orders SET paid='1' WHERE customerID=%s", ([customerID]))
         paid = True
         return render_template("makepayment.html", paid=paid)
-
     return render_template("makepayment.html")
 
 @app.route('/myorders', methods=['POST', 'GET'])
