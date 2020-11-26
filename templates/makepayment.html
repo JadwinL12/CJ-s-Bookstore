@@ -1,74 +1,88 @@
 {% extends "layout.html" %}
 {% block content %}
-  <style>
-    input{
-      text-align: center;
-    }
-  </style>
-<div class="container">
+    <style>
+        input{
+            text-align: center;
+        }
+    </style>
+    <div class="container">
 
-  <form action="" method="post">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="input-group">
-          <input type="email" class="form-control" placeholder="Search your unpaid orders with Email..." name="searchUnPaid">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Go!</button>
-        </span>
-        </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
-    </div><!-- /.row -->
-  </form>
-  <form action="/makepayment", method="post">
-    <div class="card">
-      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{% if customername %}Dear {{ customername[0][0] }}.{{ customername[0][1] }},  here are your Un-Paid Orders:{% endif %}</h3>
-      <div class="card-body">
-        <div id="table" class="table-editable">
-          <span class="table-add float-right mb-3 mr-2"></span>
-          <table class="table table-bordered table-responsive-md table-striped text-center">
-            <thead>
-              <tr>
-                <th class="text-center">Customer ID</th>
-                <th class="text-center">Order ID</th>
-                <th class="text-center">Book ID</th>
-                <th class="text-center">Book Title</th>
-                <th class="text-center">Qty.</th>
-                <th class="text-center">Confirm Change</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for orderUnPaid in ordersUnPaid %}
-              <tr>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="customerID" value="{{ orderUnPaid[7] }}" readonly></td>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="orderID" value="{{ orderUnPaid[0] }}" readonly></td>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="bookID" value="{{ orderUnPaid[3] }}" readonly></td>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="bookTitle" value="{{ orderUnPaid[6] }}" readonly></td>
-                <td class="pt-3-half" ><input type="text" class="form-control" name="qty" value="{{ orderUnPaid[4] }}"></td>
-{#                <td class="pt-3-half" ><input type="submit" class="btn btn-danger btn-rounded btn-sm my-0" name="confirm[]"  placeholder="Confirm"></td>#}
-                <td>
-                  <span class="table-remove"><button type="submit" class="btn btn-danger btn-rounded btn-sm my-0" value="{{ orderUnPaid[0] }} {{ orderUnPaid[3] }} {{ orderUnPaid[4] }}" name="confirm">Confirm</button></span>
-                </td>
-                <input type="hidden" name="originalQty" value={{ orderUnPaid[4] }}>
-              </tr>
-              {% endfor %}
-              <tr>
-                <td colspan="5">Total Cost:</td>
-                <td><input type="text" class="form-control" name="total" value="{{ total }}" readonly ></td>
-              </tr>
-              <tr>
-                <td colspan="5" contenteditable="true"> <input type="email" class="form-control" id="inputEmail4" placeholder="" value="{{ customeremail }}" name="paidBy"></td>
-                <td>
-                  <span class="table-remove"><button type="submit" class="btn btn-primary btn-rounded btn-md my-0" name="makePayment">MakePayment</button></span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <form action="" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Search your unpaid orders with Email..." name="searchUnPaid">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Go!</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </form>
+        <form action="" method="post">
+
+{#             <div class="row">#}
+{#                <div class="col-lg-12">#}
+{#                    <div class="input-group">#}
+{#                        <input type="email" class="form-control" placeholder="Search your unpaid orders with Email..." name="confirm" >#}
+{#                        <span class="input-group-btn">#}
+{#                            <button class="btn btn-default" type="submit">Go!</button>#}
+{#                        </span>#}
+{#                    </div><!-- /input-group -->#}
+{#                </div><!-- /.col-lg-6 -->#}
+{#            </div><!-- /.row -->#}
+
+
+            <div class="card">
+                <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{% if customername %}Dear {{ customername[0][0] }}.{{ customername[0][1] }},  here are your Un-Paid Orders:{% endif %}</h3>
+                <div class="card-body">
+                    <div id="table" class="table-editable">
+                        <span class="table-add float-right mb-3 mr-2"></span>
+                        <table class="table table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Customer ID</th>
+                                <th class="text-center">Order ID</th>
+                                <th class="text-center">Book ID</th>
+                                <th class="text-center">Book Title</th>
+                                <th class="text-center">Qty.</th>
+                                <th class="text-center">Confirm Change</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for orderUnPaid in ordersUnPaid %}
+                                <tr>
+                                    <td class="pt-3-half" ><input type="text" class="form-control" name="customerID" value="{{ orderUnPaid[7] }}" readonly></td>
+                                    <td class="pt-3-half" ><input type="text" class="form-control" name="orderID" value="{{ orderUnPaid[0] }}" readonly></td>
+                                    <td class="pt-3-half" ><input type="text" class="form-control" name="bookID" value="{{ orderUnPaid[3] }}" readonly></td>
+                                    <td class="pt-3-half" ><input type="text" class="form-control" name="bookTitle" value="{{ orderUnPaid[6] }}" readonly></td>
+                                    <td class="pt-3-half" ><input type="text" class="form-control" name="qty" value="{{ orderUnPaid[4] }}"></td>
+                                    <td class="pt-3-half" ><input type="submit" class="btn btn-danger btn-rounded btn-sm my-0" name="confirm"  value="update"></td>
+{#                                    <td>#}
+                                    {#                  <span class="table-remove"><button type="submit" class="btn btn-danger btn-rounded btn-sm my-0" value="{{ orderUnPaid[0] }} {{ orderUnPaid[3] }} {{ orderUnPaid[4] }}" name="confirm">Confirm</button></span>#}
+                                    {#                </td>#}
+                                    <input type="hidden" name="originalQty" value={{ orderUnPaid[4] }}>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="5">Total Cost:</td>
+                                <td><input type="text" class="form-control" name="total" value="{{ total }}" readonly ></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" contenteditable="true"> <input type="email" class="form-control" id="inputEmail4" placeholder="" value="{{ customeremail }}" name="paidBy"></td>
+                                <td class="pt-3-half" ><input type="submit" class="btn btn-primary btn-rounded btn-md my-0" name="confirm"  value="makepayment"></td>
+{#                                <td>#}
+{#                                    <span class="table-remove"><button type="submit" class="btn btn-primary btn-rounded btn-md my-0" name="" style="color: transparent;background-color: transparent; border-color: transparent;">MakePayment</button></span>#}
+{#                                </td>#}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% if paid %}
+            <h4>All your Orders have been paid. You can search your payments on <a href="mypayments">MyPayments</a> page.</h4>
+        {% endif %}
     </div>
-  </form>
-  {% if paid %}
-    <h4>All your Orders have been paid. You can search your payments on <a href="mypayments">MyPayments</a> page.</h4>
-  {% endif %}
-</div>
 {% endblock content %}
