@@ -240,7 +240,10 @@ def makepayment():
             amount = request.form['total']
             paymentEmail = request.form['paidBy']
             customerID_makePayment = execute_query(db_connection,"SELECT customerID FROM customers WHERE email=%s", ([paymentEmail])).fetchall()
-            execute_query(db_connection, "INSERT INTO payments (customerID, paymentDate, amount) VALUES (%s, current_date(), %s)", ([customerID_makePayment], [amount]))
+            if len(customerID_makePayment) == 0:
+                execute_query(db_connection, "INSERT INTO payments (paymentDate, amount) VALUES (current_date(), %s)", ([amount]))
+            else:
+                execute_query(db_connection, "INSERT INTO payments (customerID, paymentDate, amount) VALUES (%s, current_date(), %s)", ([customerID_makePayment], [amount]))
             execute_query(db_connection, "UPDATE orders SET paid='1' WHERE customerID=%s", ([customerID]))
             paid = True
             return render_template("makepayment.html", paid=paid)
