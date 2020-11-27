@@ -169,24 +169,26 @@
 
   <div class="row">
     {% for book in books %}
+    <form action="{{ url_for('home') }}" method="post">
       <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="thumbnail">
           <!-- Can use the ISBN to generate the picture automatically -->
           <img src="http://covers.openlibrary.org/b/isbn/{{ book[0] }}-M.jpg" alt="...">
           <div class="caption">
-            <p class="ISBN">ISBN: {{ book[0] }}</p>
-            <h4>{{ book[1] }}</h4>
+            <p class="ISBN"><input type="hidden" value="{{ book[0] }}" name="ISBN">ISBN: {{ book[0] }}</p>
+            <h4><input type="hidden" value="{{ book[1] }}" name="title">{{ book[1] }}</h4>
             <!-- Author need to be queried. Maybe not shown on home page -->
             {#          <p class="author">by Author </p>#}
 
           </div>
           <div>
-            <p><i class="glyphicon glyphicon-usd"></i>{{ book[2] }}</p>
-            <p class="button"><a href="#" class="btn btn-info" role="button">Add to Cart</a>
-              <a href="{{ url_for('placeorder', ISBN='9780006167242') }}" class="btn btn-info" role="button">Buy Now</a></p>
+            <p><i class="glyphicon glyphicon-usd"></i><input type="hidden" value="{{ book[2] }}" name="price">{{ book[2] }}</p>
+            <p class="button"><input type="submit" value="Add To Cart" class="btn btn-info">
+              <a href="{{ url_for('placeorder', ISBN=book[0]) }}" class="btn btn-info" role="button">Buy Now</a></p>
           </div>
         </div>
       </div>
+    </form>
     {% endfor %}
   </div>
 {% endblock content %}

@@ -9,13 +9,14 @@
     <h2 class="emailerror">{{ error }}</h2>
   {% else %}
     <h2>Welcome, dear customer. </h2>
-    <small class="form-text text-muted">Search your info with your Email or input your info before you place the order.</small><br>
+    <small class="form-text text-muted">Please make sure leave your email/account before you place the order.</small><br>
+    <small class="form-text text-muted">Create a new account if you are a new customer to us on "<a href="customerinfo">CustomerInfo</a>" page.</small><br>
 
   {% endif %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
 
 {#  <div class="container" id="orderDisplay">#}
-  <form action="" method="post">
+  <!-- <form action="" method="post">
     <div class="row">
     <div class="col-lg-12">
       <div class="input-group">
@@ -24,20 +25,20 @@
           <span class="input-group-btn">
             <button class="btn btn-default" type="submit">Go!</button>
           </span>
-      </div><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-  </div><!-- /.row -->
-  </form>
+      </div>/input-group
+    </div>/.col-lg-6
+  </div>/.row
+  </form> -->
 
-  <form id="customerinfo" action="/customerinfo" method="post">
-    <div class="form-group">
+  <form id="customerinfo" action="{{ url_for('placeorder') }}" method="post">
+    <!-- <div class="form-group">
       <label for="inputEmail">Email</label>
       <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" required
              value="{% if customer %}
                       {{ customer[0][1] }}
                     {% endif %}">
-    </div>
-    <div class="form-row">
+    </div> -->
+    <!-- <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputFirstName">First Name</label>
         <input type="text" class="form-control" id="inputFirstName" name="fname" placeholder="First Name" required
@@ -75,7 +76,16 @@
         <input type="text" class="form-control" name="postcode" id="inputZip" required
                value="{% if customer %}{{ customer[0][7] }}{% endif %}">
       </div>
-    </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+            <input type="email" class="form-control" placeholder="Search your info with your Email or input your info before you place the order..." name="customeremail">
+            <span class="input-group-btn">
+            </span>
+        </div>/input-group
+      </div>/.col-lg-6
+    </div>/.row -->
 
     <div class="card">
       <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Books in Shopping Cart:</h3>
@@ -85,32 +95,32 @@
           <table class="table table-bordered table-responsive-md table-striped text-center">
             <thead>
               <tr>
-                <th class="text-center">Book ID</th>
                 <th class="text-center">Book Title</th>
                 <th class="text-center">Qty.</th>
+                <th class="text-center">Price</th>
                 <th class="text-center">Remove</th>
               </tr>
             </thead>
             <tbody>
               {% for book in books %}
               <tr>
-                <td class="pt-3-half" >{{ book[0] }}</td>
-                <td class="pt-3-half" >{{ book[1] }}</td>
-                <td class="pt-3-half" contenteditable="true">1</td>
+                <td class="pt-3-half" id="title" name="bookTitle"><input type="hidden" name="book" value="{{ book[0] }}" class="title">{{ book[1] }}</td>
+                <td class="pt-3-half" contenteditable="true" id="qty"><input type="number" name="qty" value="1" class="qtyValue" oninput="calculateTotal()" min="1"></td>
+                <td class="pt-3-half" id="price" name="price"><input type="number" name="price" value="{{ book[2] }}" class="bookPrice" readonly></td>
                 <td>
                   <span class="table-remove"><button type="button"
-                      class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                      class="btn btn-danger btn-rounded btn-sm my-0" onclick="removeRow()">Remove</button></span>
                 </td>
               </tr>
               {% endfor %}
               <tr>
                 <td colspan="3">Total</td>
-                <td><i class="glyphicon glyphicon-usd"></i>20.99</td>
+                <td><i class="glyphicon glyphicon-usd" id="total" name="total"></i></td>
               </tr>
               <tr>
-                <td colspan="3"></td>
+                <td colspan="3"> <input type="email" class="form-control" placeholder="Leave your email before you Place the order" name="customeremail"></td>
                 <td>
-                  <span class="table-remove"><button type="button" class="btn btn-primary btn-rounded btn-md my-0">Place Your Order</button></span>
+                  <span class="table-remove"><input type="submit" value="Submit"></span>
                 </td>
               </tr>
             </tbody>
@@ -120,4 +130,27 @@
     </div>
 
   </form>
+  <!-- <script type="text/javascript" src="{{url_for('static', filename='placeorder.js')}}"></script> -->
+  <script>
+    function calculateTotal() {
+      quantity = document.getElementsByClassName("qtyValue");
+      price = document.getElementsByClassName("bookPrice");
+      total = 0;
+      for (let i = 0; i < quantity.length; i++) {
+        total += quantity[i].value * price[i].value;
+      }
+      total_row = document.getElementById("total");
+      total_row.textContent = total.toFixed(2);
+}
+    function removeRow() {
+      button = event.target;
+      span = button.parentNode;
+      data = span.parentNode;
+      row = data.parentNode;
+      while (row.firstChild) {
+        row.removeChild(row.firstChild)
+      }
+    }
+    calculateTotal();
+  </script>
 {% endblock content %}

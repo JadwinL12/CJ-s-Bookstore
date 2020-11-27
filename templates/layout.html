@@ -45,9 +45,9 @@
         <li><a href="{{ url_for('makepayment') }}">MakePayment</a></li>
         <li><a href="{{ url_for('myorders') }}">MyOrders</a></li>
         <li>
-          <a href="{{ url_for('placeorder', ISBN=9780006167242) }}" class="icons-btn d-inline-block bag">PlaceOrder
+          <a href="{{ url_for('placeorder2') }}" class="icons-btn d-inline-block bag">PlaceOrder
             <span class="glyphicon glyphicon-shopping-cart"></span>
-            <span class="number">2</span>
+            <span class="number">{{ numberInCart }}</span>
           </a>
         </li>
       </ul>
