@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<h2>Here are the available Categories in the bookstore.</h2>
   <div class="form-row">
-    <label class="form-group col-md-12" for="inputCategory">Here are the available Categories in the store.</label>
+{#    <label class="form-group col-md-12" for="inputCategory">Here are the available Categories in the store.</label>#}
     {% for category in categories %}
     <div class="form-group col-md-3">
       <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="inputCategory" value=1 checked>

@@ -12,22 +12,21 @@ cart = []
 @app.route('/home', methods=['POST', 'GET'])
 def home():
     db_connection = connect_to_database()
+    numberInCart = len(cart)
     if request.method =="POST":
         if "ISBN" in request.form:
             ISBN = request.form["ISBN"]
             bookTitle = request.form["title"]
             price = request.form["price"]
             newBook = (ISBN, bookTitle, price)
-            cart.append(newBook)
+            if newBook not in cart:
+                cart.append(newBook)
             numberInCart = len(cart)
-            for book in cart:
-                print(book[1])
             books = execute_query(db_connection, "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books;").fetchall()
             return render_template("home.html", books=books, numberInCart=numberInCart)
         else:
             searchTitle = request.form['searchTitle']
             searchTitle = "%"+searchTitle+"%"
-            numberInCart = len(cart)
             books = execute_query(db_connection, "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books WHERE title LIKE %s", ([searchTitle])).fetchall()
             return render_template("home.html", books=books, numberInCart=numberInCart)
     categoryID = request.args.get('categoryID')
@@ -37,7 +36,7 @@ def home():
                               "JOIN categories C ON BC.categoryID = C.categoryID AND C.categoryID =%s ", [categoryID]).fetchall()
     else:
         books = execute_query(db_connection, "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books;").fetchall()
-    return render_template("home.html", books=books)
+    return render_template("home.html", books=books, numberInCart=numberInCart)
 
 
 @app.route('/category', methods=['POST', 'GET'])
@@ -270,20 +269,44 @@ def myorders():
     db_connection = connect_to_database()
     numberInCart = len(cart)
     if request.method == "POST":
-        customeremail = request.form['searchOrders']
-        query = "SELECT orders.orderID, books.bookID, customers.firstName, customers.lastName, books.title, booksorders.quantity, orders.paid FROM customers " \
-                "LEFT JOIN orders ON customers.customerID = orders.customerID " \
-                "LEFT JOIN booksorders ON booksorders.orderID = orders.orderID " \
-                "LEFT JOIN books ON books.bookID = booksorders.bookID  WHERE customers.email=%s"
-        orders = execute_query(db_connection, query, ([customeremail])).fetchall()
-        return render_template("myorders.html", orders=orders,numberInCart=numberInCart)
-    return render_template("myorders.html",numberInCart=numberInCart)
+        if 'searchOrders' in request.form:
+            customeremail = request.form['searchOrders']
+            query = "SELECT orders.orderID, books.bookID, customers.firstName, customers.lastName, books.title, booksorders.quantity, orders.paid, customers.email FROM customers " \
+                    "LEFT JOIN orders ON customers.customerID = orders.customerID " \
+                    "LEFT JOIN booksorders ON booksorders.orderID = orders.orderID " \
+                    "LEFT JOIN books ON books.bookID = booksorders.bookID  WHERE customers.email=%s"
+            orders = execute_query(db_connection, query, ([customeremail])).fetchall()
+            if not orders:
+                emailNotFound = 'Customer is not found. Please check the email you input.'
+            else:
+                emailNotFound =''
+            return render_template("myorders.html", orders=orders, numberInCart=numberInCart, emailNotFound=emailNotFound)
+        if "deleteOrder" in request.form:
+            customeremail = request.form['customerEmail']
+            orderID = request.form['deleteOrder']
+            query1 = "DELETE FROM `booksorders` WHERE orderID = %s"
+            query2 = "DELETE FROM orders WHERE orderID = %s"
+            execute_query(db_connection, query1, ([orderID]))
+            execute_query(db_connection, query2, ([orderID]))
+            query = "SELECT orders.orderID, books.bookID, customers.firstName, customers.lastName, books.title, booksorders.quantity, orders.paid, customers.email FROM customers " \
+                    "LEFT JOIN orders ON customers.customerID = orders.customerID " \
+                    "LEFT JOIN booksorders ON booksorders.orderID = orders.orderID " \
+                    "LEFT JOIN books ON books.bookID = booksorders.bookID  WHERE customers.email=%s"
+            orders = execute_query(db_connection, query, ([customeremail])).fetchall()
+            # return render_template("myorders.html", orders=orders, numberInCart=numberInCart)
+        return render_template("myorders.html", orders=orders, numberInCart=numberInCart)
+        # if ("orderID" in request.form) and (request.form["searchOrders"] == ""):
+        # if request.form["searchOrders"] != "":
+        #     error_message = "Please enter your email and order ID to delete an order."
+        #     return render_template("myorders.html", error=error_message, numberInCart=numberInCart)
+    return render_template("myorders.html")
 
 @app.route('/placeorder', defaults={"ISBN": None}, methods=['POST', 'GET'])
 @app.route('/placeorder/<ISBN>', methods=['POST', 'GET'])
 def placeorder(ISBN):
     db_connection = connect_to_database()
     numberInCart = len(cart)
+    success=''
     if request.method == "GET":
         if ISBN:
             query = "SELECT bookID, title, cost, yearPublish, quantityInStock FROM books WHERE bookID=%s;"
@@ -310,7 +333,9 @@ def placeorder(ISBN):
                     for i in range(0, len(bookID)):
                         execute_query(db_connection, "INSERT INTO booksorders (`bookID`, `orderID`, `quantity`, `sellingPrice`) VALUES (%s, %s, %s, %s)", (bookID[i], orderID, quantity[i], sellingPrice[i]))
                     cart.clear()
-                    return render_template("placeorder.html",numberInCart=numberInCart)
+                    numberInCart = len(cart)
+                    success = 'Your order has been placed.'
+                    return render_template("placeorder.html",numberInCart=numberInCart, success=success)
                 else:
                     error_not_found = "Can't find your Account. Try again or create your account on CustomerInfo page."
                     return render_template("placeorder.html", error=error_not_found,numberInCart=numberInCart)

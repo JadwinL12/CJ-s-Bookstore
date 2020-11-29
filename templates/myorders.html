@@ -1,33 +1,31 @@
 {% extends "layout.html" %}
 {% block content %}
-{#  <div class="container">#}
-{#    <form action="" method="post">#}
-{#      <div class="row">#}
-{#        <div class="col-lg-12">#}
-{#          <div class="input-group">#}
-{#            <input type="text" class="form-control" placeholder="Search your Orders with your Email..." name="searchOrders">#}
-{#            <span class="input-group-btn">#}
-{#            <button class="btn btn-default" type="button">Go!</button>#}
-{#          </span>#}
-{#          </div><!-- /input-group -->#}
-{#        </div><!-- /.col-lg-6 -->#}
-{#      </div><!-- /.row -->#}
-{#      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
-{#    </form>#}
+  <style>
+  .error {
+  color:red;
+  }
+  </style>
 
-    <form action="" method="post">
+  {% if error %}
+    <h2 class="error">{{ error }}</h2>
+  {% elif emailNotFound %}
+    <h2 class="error">{{ emailNotFound }}</h2>
+  {% else %}
+    <h2 >Welcome, find your orders with your email.</h2>
+  {% endif %}
+
+  <form action="" method="post">
     <div class="row">
       <div class="col-lg-12">
         <div class="input-group">
-          <input type="email" class="form-control" placeholder="Search your Orders with Email..." name="searchOrders">
+          <input type="email" class="form-control" placeholder="Search Orders with your Email..." name="searchOrders">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Go!</button>
+            <button class="btn btn-default" type="submit">Search Your Orders!</button>
         </span>
         </div><!-- /input-group -->
       </div><!-- /.col-lg-6 -->
-    </div><!-- /.row -->
+    </div>
   </form>
-
     <div class="card">
       <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{% if orders %}{{ orders[0][2] }}, {{ orders[0][3] }} here are your orders:{% endif %}</h3>
       <div class="card-body">
@@ -65,6 +63,20 @@
         </div>
       </div>
     </div>
-
+  {%  if orders %}
+    <form action="" method="post">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="input-group">
+            <input type="hidden" value="{{ orders[0][7] }}" name="customerEmail">
+            <input type="number" class="form-control" placeholder="Input the Order ID here for the order you want to delete..." name="deleteOrder">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Delete a order!</button>
+        </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
+    </form>
+  {% endif %}
   </div>
 {% endblock content %}
