@@ -32,15 +32,15 @@
             </thead>
             <tbody>
               {% for book in books %}
-              <tr>
-                <td class="pt-3-half" id="title" name="bookTitle"><input type="hidden" name="book" value="{{ book[0] }}" class="title">{{ book[1] }}</td>
-                <td class="pt-3-half" contenteditable="true" id="qty"><input type="number" name="qty" value="1" class="qtyValue" oninput="calculateTotal()" min="1"></td>
-                <td class="pt-3-half" id="price" name="price"><input type="number" name="price" value="{{ book[2] }}" class="bookPrice" readonly></td>
-                <td>
-                  <span class="table-remove"><button type="button"
-                      class="btn btn-danger btn-rounded btn-sm my-0" onclick="removeRow()">Remove</button></span>
-                </td>
-              </tr>
+                  <tr>
+                    <td class="pt-3-half" id="title" name="bookTitle"><input type="hidden" name="book" value="{{ book[0] }}" class="title">{{ book[1] }}</td>
+                    <td class="pt-3-half" contenteditable="true" id="qty"><input type="number" name="qty" value="1" class="qtyValue" oninput="calculateTotal()" min="1"></td>
+                    <td class="pt-3-half" id="price" name="price"><input type="number" name="price" value="{{ book[2] }}" class="bookPrice" readonly></td>
+                    <td>
+                      <span class="table-remove"><button type="submit"
+                          class="btn btn-danger btn-rounded btn-sm my-0" formaction="{{ url_for('placeorder2') }}" value="{{ book[0] }}" name="remove">Remove</button></span>
+                    </td>
+                  </tr>
               {% endfor %}
               <tr>
                 <td colspan="3">Total</td>

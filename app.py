@@ -353,6 +353,17 @@ def placeorder2():
         userCart = cart
         numberInCart = len(cart)
         return render_template("placeorder.html", books=userCart, numberInCart=numberInCart)
+    if request.method == "POST" and "remove" in request.form:
+        userCart = cart
+        numberInCart = len(cart)
+        print(userCart)
+        bookID = request.form['remove']
+        for books in userCart:
+            if bookID in books:
+                userCart.remove(books)
+                numberInCart -= 1
+        return render_template("placeorder.html", books=userCart, numberInCart=numberInCart)
+                
 
 
 if __name__ == '__main__':
