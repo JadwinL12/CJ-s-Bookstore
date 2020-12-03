@@ -299,7 +299,7 @@ def myorders():
         # if request.form["searchOrders"] != "":
         #     error_message = "Please enter your email and order ID to delete an order."
         #     return render_template("myorders.html", error=error_message, numberInCart=numberInCart)
-    return render_template("myorders.html")
+    return render_template("myorders.html", numberInCart=numberInCart)
 
 @app.route('/placeorder', defaults={"ISBN": None}, methods=['POST', 'GET'])
 @app.route('/placeorder/<ISBN>', methods=['POST', 'GET'])
@@ -324,9 +324,10 @@ def placeorder(ISBN):
                 quantity = request.form.getlist('qty')
                 sellingPrice = request.form.getlist('price')
                 customer = execute_query(db_connection, "SELECT * FROM customers WHERE email=%s", [customeremail]).fetchall()
-                customerID = customer[0][0]
+
                 # If return a matching customer, then update the page
-                if customerID:
+                if customer:
+                    customerID = customer[0][0]
                     execute_query(db_connection, "INSERT INTO orders (`customerID`, `paid`) VALUES (%s, %s)", ([customerID], 0))
                     order = execute_query(db_connection, "SELECT LAST_INSERT_ID();")
                     orderID = order.fetchall()[0][0]
